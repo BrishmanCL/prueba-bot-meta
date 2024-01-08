@@ -3,7 +3,7 @@ require('dotenv').config()
 const { createBot, createProvider, createFlow, addKeyword } = require('@bot-whatsapp/bot')
 
 const MetaProvider = require('@bot-whatsapp/provider/meta')
-const MySQLAdapter = require('@bot-whatsapp/database/mysql')
+const MockAdapter = require('@bot-whatsapp/database/mock')
 
 
 /**
@@ -77,13 +77,14 @@ const flowPrincipal = addKeyword(['hola', 'ole', 'alo'])
     )
 
 const main = async () => {
-    const adapterDB = new MySQLAdapter({
-        host: process.env.MYSQL_DB_HOST,
-        user: process.env.MYSQL_DB_USER,
-        database: process.env.MYSQL_DB_NAME,
-        password: process.env.MYSQL_DB_PASSWORD,
-        port: process.env.MYSQL_DB_PORT,
-    })
+    // const adapterDB = new MySQLAdapter({
+    //     host: process.env.MYSQL_DB_HOST,
+    //     user: process.env.MYSQL_DB_USER,
+    //     database: process.env.MYSQL_DB_NAME,
+    //     password: process.env.MYSQL_DB_PASSWORD,
+    //     port: process.env.MYSQL_DB_PORT,
+    // })
+    const adapterDB = new MockAdapter()
     const adapterFlow = createFlow([flowPrincipal])
 
     const adapterProvider = createProvider(MetaProvider, {
